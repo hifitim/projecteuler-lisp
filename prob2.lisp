@@ -18,4 +18,4 @@
          (even-fib-sum (sum-list (subseq *fib-list* 0 2)) y))))
 
 (even-fib-sum 1 4000000)
-(format t "Total sum of even fibonacci numbers below 4 million: ~D~%" *even-sum*)
+(format t "Total sum: ~D~%" *even-sum*)

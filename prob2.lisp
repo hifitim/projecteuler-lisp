@@ -5,12 +5,10 @@
 
 (defun sum-list (x)
   (cond ((null x) 0)
-        ((+ (sum-list (cdr x)) (car x)))))
+        ((+ (sum-list (rest x)) (first x)))))
 
 (defun even-fib-sum (x y)
-  (format t "~D~%" x)
-  (cond ((eq x y) t)
-        ((> x y) t)
+  (cond ((or (eq x y) (> x y)) t)
         ((evenp x) 
          (incf *even-sum* x)
          (push (sum-list (subseq *fib-list* 0 2)) *fib-list*)
@@ -20,4 +18,4 @@
          (even-fib-sum (sum-list (subseq *fib-list* 0 2)) y))))
 
 (even-fib-sum 1 4000000)
-(format t "~D~%" *even-sum*)
+(format t "Total sum of even fibonacci numbers below 4 million: ~D~%" *even-sum*)

@@ -1,9 +1,6 @@
-(defvar *last-prime-factor* 2)
-(setf *last-prime-factor* 2)
-
 (defun prime-range (x n)
   (let ((n-sqrt (ceiling (sqrt n))))
-    (cond ((or  (> x n-sqrt)) t)
+    (cond ((> x n-sqrt) t)
           ((eq (rem n x) 0) nil)
           (t (prime-range (incf x) n)))))
 
@@ -15,23 +12,17 @@
 
 (defun lpf-inner (x n n-sqrt)
   (let* ((x-div (/ n x)))
-    (cond ((or (eq n-sqrt x) 
-               (> x n-sqrt))
-           *last-prime-factor*)
+    (cond ((eq 1 x) 1) ; no prime factor available
           ((and (eq (rem n x) 0) 
                 (prime-num-p x))
-           (setf *last-prime-factor* x)
-           (lpf-inner (incf x) n n-sqrt))
+           x) ; x is the first and largest prime factor
           ((and (int-p x-div)
                 (> x-div x) 
                 (eq (rem n x-div) 0) 
                 (prime-num-p x-div))
-           (setf *last-prime-factor* x-div)
-           (lpf-inner (incf x) n n-sqrt))
-          (t (lpf-inner (incf x) n n-sqrt)))))
+           x-div) ; x-div is the first and largest prime factor
+          (t (lpf-inner (decf x) n n-sqrt)))))
 
 (defun largest-prime-factor (n)  
   (let* ((n-sqrt (ceiling (sqrt n))))
-    (lpf-inner 2 n n-sqrt)))
-
-(format t "~F~%" (largest-prime-factor 600851475143 ))
+    (lpf-inner n-sqrt n n-sqrt)))

@@ -12,7 +12,7 @@
 
 (defun lpf-inner (x n n-sqrt)
   (let* ((x-div (/ n x)))
-    (cond ((= 1 x) 1) ; no prime factor available
+    (cond ((= x 1) 1) ; no prime factor available
           ((and (zerop (rem n x)) 
                 (prime-num-p x))
            x) ; x is the first and largest prime factor
@@ -24,9 +24,10 @@
 (defun largest-prime-factor (n)  
   (let* ((n-sqrt (ceiling (sqrt n))))
     (if (zerop (rem n-sqrt 2))
-        (+ n-sqrt 1))
+	  (incf n-sqrt))
     (lpf-inner n-sqrt n n-sqrt)))
 
 ;; Some large value test cases, with timing provided
 ;(time (largest-prime-factor 9007199254740993))
-(time (largest-prime-factor 600851475143))
+;(time (largest-prime-factor 907199254740993))
+;(time (largest-prime-factor 600851475143))

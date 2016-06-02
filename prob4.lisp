@@ -21,5 +21,6 @@
                      (setq largest product))))
     (format t "~a~%" largest)))
 
-(time (largest-palindrome 100 1000))
+(defun main ()
+  (time (largest-palindrome 100 1000)))
 
